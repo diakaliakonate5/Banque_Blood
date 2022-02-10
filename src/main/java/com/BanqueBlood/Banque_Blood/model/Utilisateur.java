@@ -1,5 +1,7 @@
 package com.BanqueBlood.Banque_Blood.model;
 
+import com.BanqueBlood.Banque_Blood.Profils;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -23,15 +25,19 @@ public class Utilisateur {
     private String email;
 
     @Column(nullable = false)
-    private String motDePass;
+    private String password;
 
-
+    private Profils profils;
     @ManyToOne
     private GroupeSanguin groupeSanguin;
     @ManyToOne
     private Admin admin;
     @OneToMany
     private List<Action> listAction;
+    @OneToMany
+    private List<Quarantaine> quarantaine;
+    @OneToMany
+    private List<RendezVous> rendezVous;
 
     public Utilisateur() {
     }
@@ -76,17 +82,48 @@ public class Utilisateur {
         this.email = email;
     }
 
-    public String getMotDePass() {
-        return motDePass;
+
+
+
+    public String getPassword() {
+        return password;
     }
 
-    public void setMotDePass(String motDePass) {
-        this.motDePass = motDePass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
+    public Profils getProfils() {
+        return profils;
+    }
 
+    public void setProfils(Profils profils) {
+        this.profils = profils;
+    }
 
+    public List<Action> getListAction() {
+        return listAction;
+    }
 
+    public void setListAction(List<Action> listAction) {
+        this.listAction = listAction;
+    }
+
+    public List<Quarantaine> getQuarantaine() {
+        return quarantaine;
+    }
+
+    public void setQuarantaine(List<Quarantaine> quarantaine) {
+        this.quarantaine = quarantaine;
+    }
+
+    public List<RendezVous> getRendezVous() {
+        return rendezVous;
+    }
+
+    public void setRendezVous(List<RendezVous> rendezVous) {
+        this.rendezVous = rendezVous;
+    }
 
     public GroupeSanguin getGroupeSanguin() {
         return groupeSanguin;

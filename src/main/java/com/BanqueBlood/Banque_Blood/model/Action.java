@@ -8,11 +8,14 @@ public class Action {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
-    @Column(nullable = false)
-    private String libelle;
     LocalDate date = LocalDate.now();
+    private String action;
+    private String nomComplet;
+
     @ManyToOne
     private Utilisateur utilisateur;
+    @ManyToOne
+    private Admin admin;
 
 
 
@@ -24,13 +27,6 @@ public class Action {
         this.id = id;
     }
 
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
 
     public LocalDate getDate() {
         return date;
@@ -40,5 +36,35 @@ public class Action {
         this.date = date;
     }
 
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
 
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getNomComplet() {
+        return nomComplet;
+    }
+
+    public void setNomComplet(String nomComplet) {
+        this.nomComplet = nomComplet;
+    }
 }

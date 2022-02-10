@@ -23,11 +23,11 @@ public class Admin {
     @Column(nullable = false, unique = true)
     private String login;
     @Column(nullable = false)
-    private String motDePasse;
+    private String password;
     @OneToMany
-    private List<Utilisateur> listUtilisateurs;
+    private List<Utilisateur> Utilisateur;
     @OneToMany
-    private List<Utilisateur> tUtilisateurs;
+    private List<Action> actions;
 
     public Admin() {
     }
@@ -88,11 +88,35 @@ public class Admin {
         this.login = login;
     }
 
-    public String getMotDePasse() {
-        return motDePasse;
+    public String getPassword() {
+        return password;
     }
 
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<com.BanqueBlood.Banque_Blood.model.Utilisateur> getUtilisateur() {
+        return Utilisateur;
+    }
+
+    public void setUtilisateur(List<com.BanqueBlood.Banque_Blood.model.Utilisateur> utilisateur) {
+        Utilisateur = utilisateur;
+    }
+
+    public List<Action> getActions() {
+        return actions;
+    }
+
+    public void setActions(List<Action> actions) {
+        this.actions = actions;
+    }
+
+    public String getMotDePasse() {
+        return password;
+    }
+
+    public void setMotDePasse(String password) {
+        this.password = password;
     }
 }

@@ -16,6 +16,8 @@ public class BanqueSang {
     private int telephone;
     @Column(nullable = false, unique = true)
     private String email;
+    @ManyToOne
+    private RendezVous rendezVous;
 
     public BanqueSang() {
     }
