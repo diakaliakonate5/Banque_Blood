@@ -3,7 +3,7 @@ package com.BanqueBlood.Banque_Blood.serviceImp;
 import com.BanqueBlood.Banque_Blood.Profils;
 import com.BanqueBlood.Banque_Blood.exceptions.ErrorsCode;
 import com.BanqueBlood.Banque_Blood.exceptions.InvalidEntity;
-import com.BanqueBlood.Banque_Blood.model.Action;
+
 import com.BanqueBlood.Banque_Blood.model.Utilisateur;
 import com.BanqueBlood.Banque_Blood.repository.UtilsateursRepository;
 import com.BanqueBlood.Banque_Blood.services.UtilisateurService;
@@ -48,6 +48,7 @@ public class UtilisateursServiceImp  implements UtilisateurService  {
         utilisateur1.setTelephone(utilisateur.getTelephone());
         utilisateur1.setEmail(utilisateur.getEmail());
         utilisateur1.setAdresse(utilisateur.getAdresse());
+        utilisateur1.setPassword(utilisateur.getPassword());
 
         return utilsateursRepository.save(utilisateur1);
     }
@@ -63,6 +64,8 @@ public class UtilisateursServiceImp  implements UtilisateurService  {
    if(donneurConnexion.isEmpty()){
        throw new InvalidEntity("login ou mot de passe est incorrecte", ErrorsCode.UTILISATEUR_AUTHENTIFICATION_INVALID);
    }
+
+
         return donneurConnexion.get();
     }
 

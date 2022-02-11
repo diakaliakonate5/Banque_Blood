@@ -27,7 +27,9 @@ public class Utilisateur {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated
     private Profils profils;
+
     @ManyToOne
     private GroupeSanguin groupeSanguin;
     @ManyToOne
