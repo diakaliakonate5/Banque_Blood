@@ -1,5 +1,6 @@
 package com.BanqueBlood.Banque_Blood.controller;
 
+import com.BanqueBlood.Banque_Blood.model.Action;
 import com.BanqueBlood.Banque_Blood.model.Utilisateur;
 import com.BanqueBlood.Banque_Blood.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class UtilisateursController {
         return  utilisateurService.login(telephone, password);
     }
     @GetMapping("/Alerte/{id}")
-    public void alerte (@PathVariable("id") Long id){
-        utilisateurService.addAlert(id);
+    public void alerte (@RequestBody Utilisateur utilisateur, @PathVariable("id") Long id){
+        utilisateurService.addAlert(utilisateur,id);
     }
 }

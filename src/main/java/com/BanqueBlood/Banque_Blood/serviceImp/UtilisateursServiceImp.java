@@ -4,7 +4,9 @@ import com.BanqueBlood.Banque_Blood.Profils;
 import com.BanqueBlood.Banque_Blood.exceptions.ErrorsCode;
 import com.BanqueBlood.Banque_Blood.exceptions.InvalidEntity;
 
+import com.BanqueBlood.Banque_Blood.model.Action;
 import com.BanqueBlood.Banque_Blood.model.Utilisateur;
+import com.BanqueBlood.Banque_Blood.repository.ActionRepository;
 import com.BanqueBlood.Banque_Blood.repository.UtilsateursRepository;
 import com.BanqueBlood.Banque_Blood.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +24,14 @@ public class UtilisateursServiceImp  implements UtilisateurService  {
 
     @Autowired
     ActionServiceImp actionServiceImp;
+    @Autowired
+    ActionRepository actionRepository;
 
     @Override
-    public Utilisateur ajoutUtilisateur(Utilisateur utilisateur) {
+    public Utilisateur ajoutUtilisateur(Utilisateur utilisateur)
+
+
+    {
         return utilsateursRepository.save(utilisateur);
     }
 
@@ -72,18 +79,35 @@ public class UtilisateursServiceImp  implements UtilisateurService  {
 
 
     @Override
-    public void addAlert(Long id) {
-        Utilisateur utilisateurFound = utilsateursRepository.getById(id);
+    public void addAlert(Utilisateur utilisateur, Long id) {
+        Utilisateur utilisateurFound = utilsateursRepository.findById(id).get();
 
-        //utilisateurFound.setProfils(Profils.PATIENT);
-        //System.out.println(utilisateurFound);
-        if (utilisateurFound.getProfils() == Profils.DONNEUR){
-        utilisateurFound.setProfils(Profils.PATIENT);
-       }else {
-          utilisateurFound.setProfils(Profils.DONNEUR);
-       }
+        Optional<Action> action = actionRepository.findActionByDateAndUtilisateur(id);
 
-       actionServiceImp.addAction(utilisateurFound, utilisateurFound.getNomComplet()+" a crée une notification qu'il est un "+utilisateurFound.getProfils(), utilisateurFound.getNomComplet(), LocalDate.now());
-        utilsateursRepository.save(utilisateurFound);
+        if (action.isPresent()){
+            int date = 0;
+            LocalDate dateDebut = LocalDate.now();
+            LocalDate dateFin = action.get().getDate();
+            date = dateDebut.compareTo(dateFin);
+            if (date <= -3){
+                if (utilisateurFound.getProfils() == Profils.DONNEUR){
+                    utilisateurFound.setProfils(Profils.PATIENT);
+                }else {
+                    utilisateurFound.setProfils(Profils.DONNEUR);
+                }
+                actionServiceImp.updateAction(utilisateurFound.getNomComplet()+" a crée une notification qu'il est un "+utilisateurFound.getProfils(),utilisateurFound,utilisateurFound.getNomComplet(), utilisateurFound.getId(), utilisateurFound.getGroupeSanguin(), LocalDate.now());
+                utilsateursRepository.save(utilisateurFound);
+            } else {
+                throw new InvalidEntity("Vous ne pouvez pas faire un don! Votre dernier don ne vaut pas trois mois", ErrorsCode.DON_INVALID);
+            }
+        } else {
+            if (utilisateurFound.getProfils() == Profils.DONNEUR){
+                utilisateurFound.setProfils(Profils.PATIENT);
+            }else {
+                utilisateurFound.setProfils(Profils.DONNEUR);
+            }
+            actionServiceImp.addAction(utilisateurFound, utilisateurFound.getNomComplet()+" a crée une notification qu'il est un "+utilisateurFound.getProfils(), utilisateurFound.getNomComplet(), utilisateurFound.getGroupeSanguin(), LocalDate.now());
+            utilsateursRepository.save(utilisateurFound);
+        }
     }
 }
