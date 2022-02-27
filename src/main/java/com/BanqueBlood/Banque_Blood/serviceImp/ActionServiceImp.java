@@ -71,6 +71,7 @@ public class ActionServiceImp implements ActionService {
         actionFound.get().setNomComplet(nomComplet);
         actionFound.get().setDate(date);
         actionFound.get().setGroupeSanguin(groupeSanguin);
+        actionFound.get().setAccept(true);
 
         return actionRepository.save(actionFound.get());
     }

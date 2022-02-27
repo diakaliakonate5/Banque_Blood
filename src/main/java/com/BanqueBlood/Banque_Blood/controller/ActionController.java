@@ -42,9 +42,9 @@ public class ActionController {
         return actionServiceImp.modifierAction(action, id);
     }
 
-    @PostMapping("/addAction/{id}")
-    void addAction(@RequestBody Utilisateur utilisateur, @PathVariable("id") Long id){
-        utilisateursServiceImp.addAlert(utilisateur,id);
+    @GetMapping("/accepte/{id}")
+    void addAction(@PathVariable("id") Long id){
+        utilisateursServiceImp.addAlert(id);
     }
 
 }

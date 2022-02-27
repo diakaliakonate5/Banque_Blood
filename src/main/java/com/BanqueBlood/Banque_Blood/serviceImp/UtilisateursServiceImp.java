@@ -79,12 +79,12 @@ public class UtilisateursServiceImp  implements UtilisateurService  {
 
 
     @Override
-    public void addAlert(Utilisateur utilisateur, Long id) {
+    public void addAlert(Long id) {
         Utilisateur utilisateurFound = utilsateursRepository.findById(id).get();
 
         Optional<Action> action = actionRepository.findActionByDateAndUtilisateur(id);
 
-        if (action.isPresent()){
+        if (action.isPresent() && action.get().isAccept() == true){
             int date = 0;
             LocalDate dateDebut = LocalDate.now();
             LocalDate dateFin = action.get().getDate();

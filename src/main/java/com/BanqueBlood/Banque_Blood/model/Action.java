@@ -20,7 +20,7 @@ public class Action {
     private Utilisateur utilisateur;
     @ManyToOne
     private Utilisateur accepteur;
-    private boolean accept;
+    private boolean accept = false;
     @ManyToOne
     private  GroupeSanguin groupeSanguin;
     @ManyToOne
