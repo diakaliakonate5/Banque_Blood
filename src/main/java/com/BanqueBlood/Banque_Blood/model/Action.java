@@ -15,6 +15,7 @@ public class Action {
     private String nomComplet;
     private int nbrepoche;
     private Profils profils;
+    private String status;
 
     @ManyToOne
     private Utilisateur utilisateur;
@@ -115,5 +116,13 @@ public class Action {
 
     public void setProfils(Profils profils) {
         this.profils = profils;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

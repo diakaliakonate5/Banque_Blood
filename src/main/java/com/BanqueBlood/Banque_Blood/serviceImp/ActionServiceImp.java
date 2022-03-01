@@ -10,6 +10,7 @@ import com.BanqueBlood.Banque_Blood.services.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +43,8 @@ public class ActionServiceImp implements ActionService {
         foundAction.setAction(action.getAction());
         foundAction.setAccept(action.isAccept());
         foundAction.setDate(action.getDate());
+        foundAction.setStatus(action.getStatus());
+        foundAction.setUtilisateur(action.getUtilisateur());
         foundAction.setNbrepoche(action.getNbrepoche());
         foundAction.setAccepteur(action.getAccepteur());
         foundAction.setGroupeSanguin(action.getGroupeSanguin());
@@ -54,6 +57,7 @@ public class ActionServiceImp implements ActionService {
         return actionRepository.findById(id).get();
     }
 
+    @Transactional
     public void addAction(Utilisateur utilisateur, String action, String nomComplet, GroupeSanguin groupeSanguin, LocalDate date){
         Action action1 = new Action();
         action1.setUtilisateur(utilisateur);
@@ -64,16 +68,16 @@ public class ActionServiceImp implements ActionService {
         actionRepository.save(action1);
     }
 
-    public Action updateAction(String action, Utilisateur utilisateur, String nomComplet, Long id, GroupeSanguin groupeSanguin, LocalDate date) {
-        Optional<Action> actionFound = actionRepository.findActionByDateAndUtilisateur(id);
-        actionFound.get().setAction(action);
-        actionFound.get().setUtilisateur(utilisateur);
-        actionFound.get().setNomComplet(nomComplet);
+
+    @Transactional
+    public Action updateAction( Utilisateur accepteur,  Long id, LocalDate date) {
+        Optional<Action> actionFound = actionRepository.findByIdAndAccept(id, false);
+        actionFound.get().setAccepteur(accepteur);
         actionFound.get().setDate(date);
-        actionFound.get().setGroupeSanguin(groupeSanguin);
         actionFound.get().setAccept(true);
 
-        return actionRepository.save(actionFound.get());
+        //return actionRepository.save(actionFound.get());
+        return actionFound.get();
     }
 
 

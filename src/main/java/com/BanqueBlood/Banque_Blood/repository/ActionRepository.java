@@ -10,6 +10,9 @@ import java.util.Optional;
 
 public interface ActionRepository extends JpaRepository<Action, Long> {
 
-    @Query(value = "SELECT act FROM Action act WHERE act.utilisateur.id = :id AND act.accept = true")
-    Optional<Action> findActionByDateAndUtilisateur(@Param("id") Long id);
+    //@Query(value = "SELECT act FROM Action act WHERE act.accept.id = :id AND act.accept = true")
+    //Optional<Action> findActionByDateAndUtilisateur(@Param("id") Long id);
+
+
+    Optional<Action> findByIdAndAccept(Long id, boolean accept);
 }

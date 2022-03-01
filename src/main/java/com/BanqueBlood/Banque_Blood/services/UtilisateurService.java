@@ -12,7 +12,7 @@ public interface UtilisateurService {
     Utilisateur modifier(Utilisateur utilisateur , Long id);
     void suprimer(Long id);
     Utilisateur login(String telephone, String password);
-    void addAlert(Long id);
+    void addAlert(Long idAccepteur, Long id);
 
 
 }
